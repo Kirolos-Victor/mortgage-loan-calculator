@@ -5,21 +5,21 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CalculateAmortizationRequest;
 use App\Http\Requests\CalculateExtraRepaymentScheduleRequest;
+use App\Repositories\AmortizationRepository;
 use App\Services\LoanService;
 use Illuminate\Http\JsonResponse;
 
 class MortgageLoanController extends Controller
 {
-    public function __construct(protected LoanService $loanService)
-    {
+    public function __construct(
+            protected LoanService $loanService,
+            protected AmortizationRepository $amortizationRepository
+    ) {
     }
 
     public function calculateAmortization(CalculateAmortizationRequest $request): JsonResponse
     {
-        $amortizationSchedule = $this->loanService->calculateAmortizationSchedule($request->validated());
-        $user = Auth()->user();
-        $user->loanAmortizationSchedule()->delete();
-        $user->loanAmortizationSchedule()->createMany($amortizationSchedule);
+        $amortizationSchedule = $this->amortizationRepository->setAmortization($request->validated());
 
         return response()->json([
                 'message' => "Amortization has been stored successfully",
