@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\Frontend\AmortizationController;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,10 +15,14 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Auth::routes();
 Route::get('/', function () {
-    return view('welcome');
+    return redirect()->route('loan-amortization-calculator');
 });
 
-Auth::routes();
-
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::group(['middleware' => 'auth'], function () {
+    Route::get('loan-amortization-calculator', [AmortizationController::class, 'index'])
+            ->name('loan-amortization-calculator');
+    Route::post('loan-amortization-calculator', [AmortizationController::class, 'store'])
+            ->name('store-loan-amortization-calculator');
+});
