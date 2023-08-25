@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CalculateAmortizationRequest;
+use App\Models\User;
 use App\Services\LoanService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -17,6 +18,9 @@ class MortgageLoanController extends Controller
     public function calculateAmortization(CalculateAmortizationRequest $request): JsonResponse
     {
         $amortizationSchedule = $this->loanService->calculateAmortizationSchedule($request->validated());
+        $user = Auth()->user();
+        $user->loanAmortizationSchedule()->delete();
+        $user->loanAmortizationSchedule()->createMany($amortizationSchedule);
 
         return response()->json([
                 'message' => "Amortization has been stored successfully",
