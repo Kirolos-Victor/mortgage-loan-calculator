@@ -9,4 +9,5 @@ Route::post('/login', [AuthController::class, 'login']);
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('/calculate-amortization', [MortgageLoanController::class, 'calculateAmortization']);
+    Route::post('/calculate-extra-repayment-schedule', [MortgageLoanController::class, 'calculateExtraRepaymentSchedule']);
 });

@@ -4,10 +4,9 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CalculateAmortizationRequest;
-use App\Models\User;
+use App\Http\Requests\CalculateExtraRepaymentScheduleRequest;
 use App\Services\LoanService;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
 
 class MortgageLoanController extends Controller
 {
@@ -24,6 +23,16 @@ class MortgageLoanController extends Controller
 
         return response()->json([
                 'message' => "Amortization has been stored successfully",
+                "data"    => $amortizationSchedule,
+        ]);
+    }
+
+    public function calculateExtraRepaymentSchedule(CalculateExtraRepaymentScheduleRequest $request): JsonResponse
+    {
+        $amortizationSchedule = $this->loanService->calculateAmortizationSchedule($request->validated());
+
+        return response()->json([
+                'message' => "Extra repayment amortization has been stored successfully",
                 "data"    => $amortizationSchedule,
         ]);
     }
