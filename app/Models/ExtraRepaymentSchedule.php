@@ -19,6 +19,7 @@ class ExtraRepaymentSchedule extends Model
             'ending_balance',
             'user_id',
             'extra_repayment',
+            'remaining_loan_term',
     ];
     public $timestamps = true;
 }

@@ -33,4 +33,8 @@ class User extends Authenticatable
     {
         return $this->hasMany(LoanAmortizationSchedule::class);
     }
+    public function extraRepaymentSchedule(): HasMany
+    {
+        return $this->hasMany(ExtraRepaymentSchedule::class);
+    }
 }

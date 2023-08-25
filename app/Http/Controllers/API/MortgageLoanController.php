@@ -29,11 +29,14 @@ class MortgageLoanController extends Controller
 
     public function calculateExtraRepaymentSchedule(CalculateExtraRepaymentScheduleRequest $request): JsonResponse
     {
-        $amortizationSchedule = $this->loanService->calculateAmortizationSchedule($request->validated());
+        $extraRepaymentSchedule = $this->loanService->calculateAmortizationSchedule($request->validated());
+        $user = Auth()->user();
+        $user->extraRepaymentSchedule()->delete();
+        $user->extraRepaymentSchedule()->createMany($extraRepaymentSchedule);
 
         return response()->json([
-                'message' => "Extra repayment amortization has been stored successfully",
-                "data"    => $amortizationSchedule,
+                'message' => "Extra repayment schedule has been stored successfully",
+                "data"    => $extraRepaymentSchedule,
         ]);
     }
 }

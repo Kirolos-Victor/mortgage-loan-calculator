@@ -19,7 +19,7 @@ return new class extends Migration {
             $table->decimal('interest_component', 10, 2);
             $table->decimal('extra_repayment', 10, 2)->nullable();
             $table->decimal('ending_balance', 10, 2);
-            $table->float('remaining_loan_term');
+            $table->integer('remaining_loan_term');
             $table->foreignId('user_id')->constrained();
             $table->timestamps();
         });
