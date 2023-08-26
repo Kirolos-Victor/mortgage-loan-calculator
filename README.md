@@ -2,7 +2,7 @@
 
 ### Clone the repository
 
-> git clone **https://github.com/Kirolos-Victor/mortgage-loan-calculator**
+> git clone **https://github.com/Kirolos-Victor/mortgage-loan-calculator.git**
 
 ### Install Via Composer
 
