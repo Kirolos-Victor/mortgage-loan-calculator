@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\CalculateAmortizationRequest;
 use App\Http\Requests\CalculateExtraRepaymentScheduleRequest;
 use App\Repositories\AmortizationRepository;
+use App\Repositories\ExtraRepaymentRepository;
 use App\Services\LoanService;
 use Illuminate\Http\JsonResponse;
 
@@ -13,7 +14,8 @@ class MortgageLoanController extends Controller
 {
     public function __construct(
             protected LoanService $loanService,
-            protected AmortizationRepository $amortizationRepository
+            protected AmortizationRepository $amortizationRepository,
+            protected ExtraRepaymentRepository $extraRepaymentRepository,
     ) {
     }
 
@@ -29,10 +31,7 @@ class MortgageLoanController extends Controller
 
     public function calculateExtraRepaymentSchedule(CalculateExtraRepaymentScheduleRequest $request): JsonResponse
     {
-        $extraRepaymentSchedule = $this->loanService->calculateAmortizationSchedule($request->validated());
-        $user = Auth()->user();
-        $user->extraRepaymentSchedule()->delete();
-        $user->extraRepaymentSchedule()->createMany($extraRepaymentSchedule);
+        $extraRepaymentSchedule = $this->extraRepaymentRepository->setExtraRepaymentSchedule($request->validated());
 
         return response()->json([
                 'message' => "Extra repayment schedule has been stored successfully",

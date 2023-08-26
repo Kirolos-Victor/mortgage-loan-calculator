@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Frontend\AmortizationController;
+use App\Http\Controllers\Frontend\ExtraRepaymentController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -25,4 +26,8 @@ Route::group(['middleware' => 'auth'], function () {
             ->name('loan-amortization-calculator');
     Route::post('loan-amortization-calculator', [AmortizationController::class, 'store'])
             ->name('store-loan-amortization-calculator');
+    Route::get('extra-repayment-calculator', [ExtraRepaymentController::class, 'index'])
+            ->name('extra-repayment-calculator');
+    Route::post('extra-repayment-calculator', [ExtraRepaymentController::class, 'store'])
+            ->name('store-extra-repayment-calculator');
 });

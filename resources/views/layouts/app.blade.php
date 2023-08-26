@@ -31,8 +31,15 @@
 
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <!-- Left Side Of Navbar -->
-                <ul class="navbar-nav me-auto">
-
+                <ul class="navbar-nav me-auto ">
+                    <li class="nav-item" style="margin-right: 20px;">
+                        <a class="btn btn-success" href="{{route('loan-amortization-calculator')}}">Amortization
+                            Calculator</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="btn btn-success" href="{{route('extra-repayment-calculator')}}">Extra Repayment
+                            Calculator</a>
+                    </li>
                 </ul>
 
                 <!-- Right Side Of Navbar -->
@@ -76,15 +83,19 @@
     </nav>
 
     <main class="py-4">
-        @if ($errors->any())
-            <div class="alert alert-danger">
-                <ul>
-                    @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
-            </div>
-        @endif
+        <div class="container">
+            @if ($errors->any())
+
+                <div class="alert alert-danger">
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
+        </div>
+
         @yield('content')
     </main>
 </div>
